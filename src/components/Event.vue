@@ -63,8 +63,7 @@
       <slot name="scheduleTitle" v-bind="{schedule, schedule, calendarEvent, details}">
 
         <!-- class="ds-textfield ds-calendar-event-title" -->
-        <v-text-field single-line hide-details solo flat
-          class="ds-event-title"
+        <v-text-field style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 25px; padding-right: 30px"
           :label="labels.title"
           :readonly="isReadOnly"
           v-model="details.title"
@@ -120,50 +119,72 @@
             <v-card flat>
               <v-card-text>
 
-                <!-- Location -->
-                <slot name="eventDetailsLocation" v-bind="slotData">
-                  <v-text-field v-if="$dayspan.supports.location"
-                    single-line hide-details solo flat
-                    prepend-icon="location_on"
-                    :label="labels.location"
-                    :readonly="isReadOnly"
-                    v-model="details.location"
-                  ></v-text-field>
-                </slot>
 
-                <!-- Description -->
-                <slot name="eventDetailsDescription" v-bind="slotData">
+                 <slot name="eventDetailsDescription" v-bind="slotData">
                   <v-textarea v-if="$dayspan.supports.description"
-                    hide-details single-line solo flat
+                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 25px; padding-right: 30px"
                     prepend-icon="subject"
+                    placeholder="Describe the training"
                     :label="labels.description"
                     :readonly="isReadOnly"
                     v-model="details.description"
                   ></v-textarea>
                 </slot>
 
-                <!-- Calendar -->
-                <slot name="eventDetailsCalendar" v-bind="slotData">
-                  <v-text-field v-if="$dayspan.supports.calendar"
-                    single-line hide-details solo flat readonly
-                    prepend-icon="event"
-                    :label="labels.calendar"
+                <slot name="eventDetailsDistance" v-bind="slotData">
+                  <v-text-field
+                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 25px; padding-right: 30px"
+                    prepend-icon="directions_run"
+                    placeholder="08.25 mi"
                     :readonly="isReadOnly"
-                    v-model="details.calendar"
+                    return-masked-value
+                    label="Add distance"
+                    mask="##.##"
+                    suffix="miles"
+                    v-model="details.distance"
                   ></v-text-field>
                 </slot>
 
+                <slot name="eventDetailsTime" v-bind="slotData">
+                  <v-text-field
+                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 25px; padding-right: 30px"
+                    prepend-icon="access_time"
+                    :readonly="isReadOnly"
+                    placeholder="00:56:30"
+                    label="Add time"
+                    v-model="details.time"
+                    return-masked-value
+                    mask="##:##:##"
+                    suffix="HH:MM:SS"
+                  ></v-text-field>
+                </slot>
+
+                <!-- Location -->
+                <slot name="eventDetailsLocation" v-bind="slotData">
+                  <v-text-field  v-if="$dayspan.supports.location"
+                    prepend-icon="location_on"
+                    placeholder="Hinsdale, IL"
+                    :label="labels.location"
+                    :readonly="isReadOnly"
+                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 25px; padding-right: 30px"
+                    v-model="details.location"
+                  ></v-text-field>
+                </slot>
+
+                <!-- Description -->
                 <!-- Color -->
                 <slot name="eventDetailsColor" v-bind="slotData">
                   <v-select v-if="$dayspan.supports.color"
-                    single-line hide-details solo flat
                     prepend-icon="invert_colors"
                     :items="$dayspan.colors"
                     :color="details.color"
+                    placeholder="Select"
+                    label="Select color"
                     :disabled="isReadOnly"
+                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 25px; padding-right: 30px"
                     v-model="details.color">
-                    <template slot="item" slot-scope="{ item }">
-                      <v-list-tile-content>
+                    <template slot="item" slot-scope="{ item }" >
+                      <v-list-tile-content style="background-color: #12a3ad">
                         <div class="ds-color-option" :style="{backgroundColor: item.value}" v-text="item.text"></div>
                       </v-list-tile-content>
                     </template>
@@ -171,34 +192,7 @@
                 </slot>
 
                 <!-- Icon -->
-                <slot name="eventDetailsIcon" v-bind="slotData">
-                  <v-select v-if="$dayspan.supports.icon"
-                    single-line hide-details solo flat
-                    :prepend-icon="details.icon || 'help'"
-                    :items="$dayspan.icons"
-                    :disabled="isReadOnly"
-                    v-model="details.icon">
-                    <template slot="item" slot-scope="{ item }">
-                      <v-list-tile-avatar>
-                        <v-icon>{{ item.value }}</v-icon>
-                      </v-list-tile-avatar>
-                      <v-list-tile-content>
-                        {{ item.text }}
-                      </v-list-tile-content>
-                    </template>
-                  </v-select>
-                </slot>
-
-                <!-- Busy -->
-                <slot name="eventDetailsBusy" v-bind="slotData">
-                  <v-select v-if="$dayspan.supports.busy"
-                    single-line hide-details solo flat
-                    prepend-icon="work"
-                    :items="busyOptions"
-                    :disabled="isReadOnly"
-                    v-model="details.busy"
-                  ></v-select>
-                </slot>
+            
 
                 <slot name="eventDetailsExtra" v-bind="slotData"></slot>
 
@@ -414,6 +408,14 @@ export default {
       default() {
         return this.$dsDefaults().busyOptions;
       }
+    },
+
+    newOptions:
+    {
+      type: Array,
+      default() {
+        return this.$dsDefaults().newOptions;
+      }
     }
   },
 
@@ -448,6 +450,7 @@ export default {
         schedule: this.schedule,
         details: this.details,
         busyOptions: this.busyOptions,
+        newOptions: this.newOptions,
         day: this.day,
         calendar: this.calendar,
         calendarEvent: this.calendarEvent,

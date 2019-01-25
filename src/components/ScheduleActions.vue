@@ -31,7 +31,7 @@
       <v-list-tile @click="setEnd" v-if="canSetEnd">
         <v-list-tile-title v-html="labels.setEnd"></v-list-tile-title>
       </v-list-tile> -->
-
+<!-- 
       <v-list-tile @click="moveStart" v-if="canMove">
         <v-menu
           lazy offset-y full-width
@@ -63,8 +63,8 @@
           </v-time-picker>
 
         </v-menu>
-      </v-list-tile>
-
+      </v-list-tile> -->
+<!-- 
       <v-list-tile @click="includeStart" v-if="canInclude">
         <v-menu
           lazy offset-y full-width
@@ -96,7 +96,7 @@
           </v-time-picker>
 
         </v-menu>
-      </v-list-tile>
+      </v-list-tile> -->
 
       <slot name="scheduleActionsAdditional" v-bind="{schedule, calendarEvent, calendar}"></slot>
 

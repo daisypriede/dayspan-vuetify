@@ -119,6 +119,11 @@
             <v-card flat>
               <v-card-text>
 
+                  <v-checkbox box
+                    label="Add Distance Range"
+                    v-model="distance_range_checked"
+                  ></v-checkbox>
+
 
                  <slot name="eventDetailsDescription" v-bind="slotData">
                   <v-textarea v-if="$dayspan.supports.description"
@@ -132,7 +137,7 @@
                   ></v-textarea>
                 </slot>
 
-                <slot name="eventDetailsDistance" v-bind="slotData">
+                <slot name="eventDetailsDistance" v-bind="slotData" v-if='!distance_range_checked'>
                   <v-text-field
                     style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
                     prepend-icon="directions_run"
@@ -143,6 +148,34 @@
                     mask="##.##"
                     suffix="miles"
                     v-model="details.distance"
+                  ></v-text-field>
+                </slot>
+
+                <slot name="eventDetailsDistance" v-bind="slotData" v-if='distance_range_checked'>
+                  <v-text-field
+                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                    prepend-icon="directions_run"
+                    placeholder="08.25 mi"
+                    :readonly="isReadOnly"
+                    return-masked-value
+                    label="Add minimum distance"
+                    mask="##.##"
+                    suffix="miles"
+                    v-model="details.min_distance"
+                  ></v-text-field>
+                </slot>
+
+                <slot name="eventDetailsDistance" v-bind="slotData" v-if='distance_range_checked'>
+                  <v-text-field
+                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                    prepend-icon="directions_run"
+                    placeholder="18.50 mi"
+                    :readonly="isReadOnly"
+                    return-masked-value
+                    label="Add maximum distance"
+                    mask="##.##"
+                    suffix="miles"
+                    v-model="details.max_distance"
                   ></v-text-field>
                 </slot>
 
@@ -423,7 +456,8 @@ export default {
   data: vm => ({
     tab: 'details',
     schedule: new Schedule(),
-    details: vm.$dayspan.getDefaultEventDetails()
+    details: vm.$dayspan.getDefaultEventDetails(),
+    distance_range_checked: false
   }),
 
   watch:

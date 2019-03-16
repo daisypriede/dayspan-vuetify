@@ -119,12 +119,6 @@
             <v-card flat>
               <v-card-text>
 
-                  <v-checkbox box
-                    label="Add Distance Range"
-                    v-model="distance_range_checked"
-                  ></v-checkbox>
-
-
                  <slot name="eventDetailsDescription" v-bind="slotData">
                   <v-textarea v-if="$dayspan.supports.description"
                     style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
@@ -137,61 +131,119 @@
                   ></v-textarea>
                 </slot>
 
-                <slot name="eventDetailsDistance" v-bind="slotData" v-if='!distance_range_checked'>
-                  <v-text-field
-                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
-                    prepend-icon="directions_run"
-                    placeholder="08.25 mi"
-                    :readonly="isReadOnly"
-                    return-masked-value
-                    label="Add distance"
-                    mask="##.##"
-                    suffix="miles"
-                    v-model="details.distance"
-                  ></v-text-field>
-                </slot>
+                <div style="display: flex">
+                  <div style='flex: 3' v-if='!distance_range_checked'>
+                    <slot name="eventDetailsDistance" v-bind="slotData">
+                      <v-text-field
+                        style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                        prepend-icon="directions_run"
+                        placeholder="08.25 mi"
+                        :readonly="isReadOnly"
+                        return-masked-value
+                        label="Add distance"
+                        mask="##.##"
+                        suffix="miles"
+                        v-model="details.distance"
+                      ></v-text-field>
+                    </slot>
+                  </div>
 
-                <slot name="eventDetailsDistance" v-bind="slotData" v-if='distance_range_checked'>
-                  <v-text-field
-                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
-                    prepend-icon="directions_run"
-                    placeholder="08.25 mi"
-                    :readonly="isReadOnly"
-                    return-masked-value
-                    label="Add minimum distance"
-                    mask="##.##"
-                    suffix="miles"
-                    v-model="details.min_distance"
-                  ></v-text-field>
-                </slot>
+                <div style='flex: 3' v-if='distance_range_checked'>
+                  <slot name="eventDetailsDistance" v-bind="slotData">
+                    <v-text-field
+                      style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                      prepend-icon="directions_run"
+                      placeholder="08.25 mi"
+                      :readonly="isReadOnly"
+                      return-masked-value
+                      label="Add minimum distance"
+                      mask="##.##"
+                      suffix="miles"
+                      v-model="details.min_distance"
+                    ></v-text-field>
+                  </slot>
+                </div>
 
-                <slot name="eventDetailsDistance" v-bind="slotData" v-if='distance_range_checked'>
-                  <v-text-field
-                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
-                    prepend-icon="directions_run"
-                    placeholder="18.50 mi"
-                    :readonly="isReadOnly"
-                    return-masked-value
-                    label="Add maximum distance"
-                    mask="##.##"
-                    suffix="miles"
-                    v-model="details.max_distance"
-                  ></v-text-field>
-                </slot>
+                <div style='flex: 3; margin-left: 10px;' v-if='distance_range_checked'>
+                  <slot name="eventDetailsDistance" v-bind="slotData">
+                    <v-text-field
+                      style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                      prepend-icon="directions_run"
+                      placeholder="18.50 mi"
+                      :readonly="isReadOnly"
+                      return-masked-value
+                      label="Add maximum distance"
+                      mask="##.##"
+                      suffix="miles"
+                      v-model="details.max_distance"
+                    ></v-text-field>
+                  </slot>
+                </div>
 
-                <slot name="eventDetailsTime" v-bind="slotData">
-                  <v-text-field
-                    style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
-                    prepend-icon="access_time"
-                    :readonly="isReadOnly"
-                    placeholder="00:56:30"
-                    label="Add time"
-                    v-model="details.time"
-                    return-masked-value
-                    mask="##:##:##"
-                    suffix="HH:MM:SS"
-                  ></v-text-field>
-                </slot>
+                <div style='margin: 0; align-items: center; margin-top: 15px; margin-left: 20px;'>
+                  <v-checkbox box
+                      label="Add Range"
+                      v-model="distance_range_checked"
+                  ></v-checkbox>
+                </div>
+              </div>
+
+              <div style='display: flex'>
+                <div style='flex: 3;' v-if='!time_range_checked'>
+                  <slot name="eventDetailsTime" v-bind="slotData">
+                    <v-text-field
+                      style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                      prepend-icon="access_time"
+                      :readonly="isReadOnly"
+                      placeholder="00:56:30"
+                      label="Add time"
+                      v-model="details.time"
+                      return-masked-value
+                      mask="##:##:##"
+                      suffix="HH:MM:SS"
+                    ></v-text-field>
+                  </slot>
+                </div>
+                
+                <div style='flex: 3;' v-if='time_range_checked'>
+                  <slot name="eventDetailsTime" v-bind="slotData">
+                    <v-text-field
+                      style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                      prepend-icon="access_time"
+                      :readonly="isReadOnly"
+                      placeholder="00:56:30"
+                      label="Add minimum time"
+                      v-model="details.min_time"
+                      return-masked-value
+                      mask="##:##:##"
+                      suffix="HH:MM:SS"
+                    ></v-text-field>
+                  </slot>
+                </div>
+
+                <div style='flex: 3; margin-left: 10px;' v-if='time_range_checked'>
+                  <slot name="eventDetailsTime" v-bind="slotData">
+                    <v-text-field
+                      style="background-color: rgba(0, 0, 0, 0.04); padding-top: 25px; padding-left: 15px; padding-right: 30px"
+                      prepend-icon="access_time"
+                      :readonly="isReadOnly"
+                      placeholder="10:56:30"
+                      label="Add maximum time"
+                      v-model="details.max_time"
+                      return-masked-value
+                      mask="##:##:##"
+                      suffix="HH:MM:SS"
+                    ></v-text-field>
+                  </slot>
+                </div>
+
+                <div style='margin: 0; align-items: center; margin-top: 15px; margin-left: 20px;'>
+                  <v-checkbox box
+                      label="Add Range"
+                      v-model="time_range_checked"
+                  ></v-checkbox> 
+                </div> 
+              </div>
 
                 <!-- Location -->
                 <slot name="eventDetailsLocation" v-bind="slotData">
@@ -457,7 +509,8 @@ export default {
     tab: 'details',
     schedule: new Schedule(),
     details: vm.$dayspan.getDefaultEventDetails(),
-    distance_range_checked: false
+    distance_range_checked: false,
+    time_range_checked: false,
   }),
 
   watch:

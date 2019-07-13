@@ -780,4 +780,30 @@ export default {
   }
 }
 
+.ds-add-event-today {
+  background-color: #12A3AD !important; 
+  color: white !important;
+  border-radius: 3px !important;
+}
+
+.accent--text {
+  color: #12A3AD !important;
+  caret-color: #12A3AD !important;
+}
+
+.primary--text {
+  color: #12A3AD !important;
+  caret-color: #12A3AD !important;
+}
+
+.primary {
+    background-color: #12A3AD !important;
+    border-color: #12A3AD !important;
+}
+
+.ds-today-dom {
+  border-radius: 3px !important;
+  background-color: #12A3AD !important;
+}
+
 </style>

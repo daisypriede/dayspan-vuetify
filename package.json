@@ -22,7 +22,8 @@
     "styleguide:build": "vue-styleguidist build"
   },
   "dependencies": {
-    "dayspan": "^0.12.2",
+    "as": "^0.4.1",
+    "dayspan": "git+https://github.com/priede/dayspan.git",
     "material-design-icons-iconfont": "^3.0.3",
     "vue": "^2.3.3",
     "vuetify": "^1.3.9"

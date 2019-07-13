@@ -8,7 +8,7 @@ export default [
   { text: LOCALE_ENTRY, value: '#673AB7' },
   { text: LOCALE_ENTRY, value: '#3F51B5' },
   { text: LOCALE_ENTRY, value: '#2196F3' },
-  { text: LOCALE_ENTRY, value: '#1976d2' },
+  { text: LOCALE_ENTRY, value: '#12A3AD' },
   { text: LOCALE_ENTRY, value: '#03A9F4' },
   { text: LOCALE_ENTRY, value: '#00BCD4' },
   { text: LOCALE_ENTRY, value: '#009688' },

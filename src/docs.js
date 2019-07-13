@@ -32,7 +32,7 @@ Vue.use(DaySpanVuetify,
   {
     getDefaultEventColor()
     {
-      return '#1976d2';
+      return '#12A3AD';
     }
   }
 });
